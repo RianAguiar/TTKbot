@@ -14,8 +14,6 @@ meu_projeto/
 │   ├── wsgi.py
 │   └── asgi.py
 │
-├── templates/
-│   └── base.html
 │
 ├── static/
 │
@@ -23,6 +21,7 @@ meu_projeto/
 │   ├── __init__.py
 │   ├── migrations/
 │   ├── templates/
+│   │   ├── base.html
 │   │   └── videos/
 │   │       ├── lista.html
 │   │       ├── upload.html
