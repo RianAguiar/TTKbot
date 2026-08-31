@@ -1,32 +1,39 @@
+
 ```text
-TTKbot/
-│
+meu_projeto/
 ├── manage.py
+├── requirements.txt
+├── .env
+├── .gitignore
 │
-├── config/
+├── meu_projeto/
 │   ├── __init__.py
 │   ├── settings.py
 │   ├── urls.py
-│   ├── asgi.py
-│   └── wsgi.py
+│   ├── celery.py
+│   ├── wsgi.py
+│   └── asgi.py
+│
+├── templates/
+│   └── base.html
+│
+├── static/
 │
 ├── videos/
+│   ├── __init__.py
 │   ├── migrations/
-│   │   └── __init__.py
-│   │
 │   ├── templates/
 │   │   └── videos/
 │   │       ├── lista.html
 │   │       ├── upload.html
 │   │       └── detalhe.html
-│   │
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
 │   ├── models.py
+│   ├── forms.py
+│   ├── views.py
 │   ├── urls.py
-│   └── views.py
+│   ├── tasks.py
+│   ├── admin.py
+│   └── tests.py
 │
-├── media/
-│   └── videos/
+└── media/
+    └── videos/
