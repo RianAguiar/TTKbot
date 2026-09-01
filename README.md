@@ -1,6 +1,6 @@
 # TTKbot
 
-Aplicação Django para upload de vídeos e publicação automática (imediata ou agendada) no TikTok, usando Celery para processamento assíncrono.
+Aplicação para upload de vídeos e publicação automática no TikTok, usando Celery para processamento assíncrono.
 
 ## Funcionalidades
 
@@ -12,8 +12,8 @@ Aplicação Django para upload de vídeos e publicação automática (imediata o
 ## Requisitos
 
 - Python 3.10+
-- Redis (usado como broker do Celery)
-- Conta de desenvolvedor no [TikTok for Developers](https://developers.tiktok.com/) com acesso ao escopo `video.publish`
+- Redis usado como broker do Celery
+- Conta de desenvolvedor no [TikTok for Developers](https://developers.tiktok.com/) com acesso ao `video.publish`
 
 ## Instalação
 
