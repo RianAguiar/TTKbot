@@ -19,8 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9@%t#t3_c99r5!1ydbj@qpkhvmno&s!(8b-x)$x5#*wel$1n81'
+import os
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -140,3 +140,6 @@ TIKTOK_ACCESS_TOKEN = os.environ.get("TIKTOK_ACCESS_TOKEN", "")
 TIKTOK_PRIVACY_LEVEL = os.environ.get("TIKTOK_PRIVACY_LEVEL", "SELF_ONLY")
 # ^ SELF_ONLY é obrigatório até seu app passar pela auditoria da TikTok.
 #   Depois de auditado, pode usar "PUBLIC_TO_EVERYONE" ou "MUTUAL_FOLLOW_FRIENDS".
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
