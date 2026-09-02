@@ -3,7 +3,10 @@ from django.utils import timezone
 
 from .models import Video
 from .forms import VideoForm
-from .tasks import publicar_video_task
+from .tasks import (
+    publicar_video_tiktok_task,
+    publicar_video_instagram_task,
+)
 
 
 def lista_videos(request):
@@ -23,17 +26,25 @@ def upload_video(request):
         if form.is_valid():
             video = form.save(commit=False)
             agendado_para = form.cleaned_data.get("agendado_para")
+            video.save()
 
-            if agendado_para and agendado_para > timezone.now():
-                video.status = "agendado"
-                video.save()
-                # Celery só dispara a task na hora marcada (eta)
-                publicar_video_task.apply_async(args=[video.id], eta=agendado_para)
-            else:
-                video.status = "rascunho"
-                video.save()
-                # dispara imediatamente, assim que a request terminar
-                publicar_video_task.delay(video.id)
+            agendado = agendado_para and agendado_para > timezone.now()
+
+            if video.postar_tiktok:
+                if agendado:
+                    video.tiktok_status = "agendado"
+                    publicar_video_tiktok_task.apply_async(args=[video.id], eta=agendado_para)
+                else:
+                    publicar_video_tiktok_task.delay(video.id)
+
+            if video.postar_instagram:
+                if agendado:
+                    video.instagram_status = "agendado"
+                    publicar_video_instagram_task.apply_async(args=[video.id], eta=agendado_para)
+                else:
+                    publicar_video_instagram_task.delay(video.id)
+
+            video.save()
 
             return redirect("lista_videos")
 

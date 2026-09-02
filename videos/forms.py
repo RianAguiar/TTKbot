@@ -15,9 +15,21 @@ class VideoForm(forms.ModelForm):
 
     class Meta:
         model = Video
-        fields = ["titulo", "descricao", "arquivo", "agendado_para"]
+        fields = ["titulo", "descricao", "arquivo", "postar_tiktok", "postar_instagram", "agendado_para"]
         widgets = {
             "titulo": forms.TextInput(attrs={"class": "form-control"}),
             "descricao": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             "arquivo": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "postar_tiktok": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "postar_instagram": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
+        labels = {
+            "postar_tiktok": "Publicar no TikTok",
+            "postar_instagram": "Publicar no Instagram",
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not cleaned_data.get("postar_tiktok") and not cleaned_data.get("postar_instagram"):
+            raise forms.ValidationError("Selecione ao menos uma rede social para publicar.")
+        return cleaned_data
