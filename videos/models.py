@@ -3,9 +3,9 @@ from django.db import models
 
 class Video(models.Model):
     STATUS_CHOICES = [
-        ("rascunho", "Rascunho"),
+        ("pendente", "Pendente"),
         ("agendado", "Agendado"),
-        ("enviando", "Enviando para o TikTok"),
+        ("enviando", "Enviando"),
         ("publicado", "Publicado"),
         ("erro", "Erro ao publicar"),
     ]
@@ -15,16 +15,20 @@ class Video(models.Model):
     arquivo = models.FileField(upload_to="videos/%Y/%m/")
     criado_em = models.DateTimeField(auto_now_add=True)
 
-    # --- Campos novos para publicação no TikTok ---
-    agendado_para = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="Data/hora em que o vídeo deve ser publicado no TikTok. Deixe em branco para publicar imediatamente.",
-    )
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="rascunho")
+    agendado_para = models.DateTimeField(null=True, blank=True)
+
+    postar_tiktok = models.BooleanField(default=True)
+    postar_instagram = models.BooleanField(default=False)
+
+    tiktok_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pendente")
     tiktok_publish_id = models.CharField(max_length=255, blank=True)
-    publicado_em = models.DateTimeField(null=True, blank=True)
-    erro_publicacao = models.TextField(blank=True)
+    tiktok_publicado_em = models.DateTimeField(null=True, blank=True)
+    tiktok_erro = models.TextField(blank=True)
+
+    instagram_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pendente")
+    instagram_container_id = models.CharField(max_length=255, blank=True)
+    instagram_publicado_em = models.DateTimeField(null=True, blank=True)
+    instagram_erro = models.TextField(blank=True)
 
     class Meta:
         ordering = ["-criado_em"]
