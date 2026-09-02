@@ -16,18 +16,24 @@
             {% for video in videos %}
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card h-100 shadow-sm">
-                        {% if video.thumbnail %}
-                            <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="{{ video.titulo }}">
-                        {% else %}
-                            <video class="card-img-top" style="height: 180px; object-fit: cover; background: #000;" muted>
-                                <source src="{{ video.arquivo.url }}">
-                            </video>
-                        {% endif %}
+                        <video class="card-img-top" style="height: 180px; object-fit: cover; background: #000;" muted>
+                            <source src="{{ video.arquivo.url }}">
+                        </video>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ video.titulo }}</h5>
                             <p class="card-text text-muted small flex-grow-1">
                                 {{ video.descricao|truncatewords:20 }}
                             </p>
+
+                            <div class="d-flex gap-2 mb-2">
+                                {% if video.postar_tiktok %}
+                                    <span class="badge bg-secondary">TikTok: {{ video.get_tiktok_status_display }}</span>
+                                {% endif %}
+                                {% if video.postar_instagram %}
+                                    <span class="badge bg-secondary">Instagram: {{ video.get_instagram_status_display }}</span>
+                                {% endif %}
+                            </div>
+
                             <p class="card-text">
                                 <small class="text-muted">
                                     Publicado em {{ video.criado_em|date:"d/m/Y H:i" }}
@@ -41,29 +47,6 @@
                 </div>
             {% endfor %}
         </div>
-
-        {% if is_paginated %}
-        <nav class="mt-4" aria-label="Paginação de vídeos">
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-                    </li>
-                {% endif %}
-                <li class="page-item disabled">
-                    <span class="page-link">
-                        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-                    </span>
-                </li>
-                {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% endif %}
-
     {% else %}
         <div class="text-center py-5">
             <p class="text-muted mb-3">Nenhum vídeo enviado ainda.</p>

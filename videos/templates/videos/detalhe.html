@@ -27,6 +27,30 @@
                 <p class="mb-4" style="white-space: pre-line;">{{ video.descricao }}</p>
             {% endif %}
 
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h6 mb-3">Status de publicação</h2>
+
+                    {% if video.postar_tiktok %}
+                        <p class="mb-1">
+                            <strong>TikTok:</strong> {{ video.get_tiktok_status_display }}
+                        </p>
+                        {% if video.tiktok_erro %}
+                            <p class="text-danger small mb-2">{{ video.tiktok_erro }}</p>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if video.postar_instagram %}
+                        <p class="mb-1">
+                            <strong>Instagram:</strong> {{ video.get_instagram_status_display }}
+                        </p>
+                        {% if video.instagram_erro %}
+                            <p class="text-danger small mb-0">{{ video.instagram_erro }}</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
             <div class="d-flex gap-2">
                 <a href="{% url 'lista_videos' %}" class="btn btn-outline-secondary">
                     Voltar
