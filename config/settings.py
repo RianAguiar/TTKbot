@@ -133,13 +133,18 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
 # TikTok Content Posting API
-# Nunca deixe o token fixo no código-fonte em produção — use variável de ambiente.
-import os  # noqa: E402
-
 TIKTOK_ACCESS_TOKEN = os.environ.get("TIKTOK_ACCESS_TOKEN", "")
 TIKTOK_PRIVACY_LEVEL = os.environ.get("TIKTOK_PRIVACY_LEVEL", "SELF_ONLY")
 # ^ SELF_ONLY é obrigatório até seu app passar pela auditoria da TikTok.
 #   Depois de auditado, pode usar "PUBLIC_TO_EVERYONE" ou "MUTUAL_FOLLOW_FRIENDS".
+
+INSTAGRAM_ACCESS_TOKEN = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "")
+INSTAGRAM_ACCOUNT_ID = os.environ.get("INSTAGRAM_ACCOUNT_ID", "")
+
+# Domínio público onde os vídeos ficam acessíveis (o Instagram busca o vídeo
+# via essa URL, não aceita upload direto de arquivo local).
+SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "http://127.0.0.1:8000")
+
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
